@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>Kid-Friendly Cooking App</title>
+<style>
+body { font-family: sans-serif; }
+#recipe-container { display: none; }
+.recipe { border: 1px solid #ccc; padding: 10px; margin-bottom: 10px; }
+.recipe h2 { margin-top: 0; }
+</style>
+</head>
+<body>
+
+<h1>Yummy Recipes for Kids!</h1>
+
+<select id="recipe-select">
+  <option value="">Choose a Recipe</option>
+</select>
+
+<div id="recipe-container">
+  <h2 id="recipe-title"></h2>
+  <p id="fun-fact"></p>
+  <ul id="ingredients"></ul>
+  <ol id="instructions"></ol>
+</div>
+
+
+<script>
+const recipes = {
+  "fruit-salad": {
+    title: "Fruity Fun Salad",
+    funFact: "Did you know bananas are actually berries?",
+    ingredients: ["1 apple, chopped", "1 banana, sliced", "1 orange, peeled and segmented", "1/2 cup grapes", "1/4 cup berries"],
+    instructions: ["Wash all the fruit.", "Chop the apple, slice the banana, and peel and segment the orange.", "Combine all the fruit in a bowl.", "Enjoy!"]
+  },
+  "peanut-butter-sandwich": {
+    title: "Peanut Butter Power Sandwich",
+    funFact: "Peanuts grow underground!",
+    ingredients: ["2 slices of bread", "2 tablespoons peanut butter", "1 tablespoon jelly (optional)"],
+    instructions: ["Spread peanut butter on one slice of bread.", "Spread jelly on the other slice of bread (optional).", "Put the two slices of bread together.", "Cut in half and enjoy!"]
+  }
+};
+
+const recipeSelect = document.getElementById('recipe-select');
+const recipeContainer = document.getElementById('recipe-container');
+const recipeTitle = document.getElementById('recipe-title');
+const funFact = document.getElementById('fun-fact');
+const ingredientsList = document.getElementById('ingredients');
+const instructionsList = document.getElementById('instructions');
+
+
+for (const recipeId in recipes) {
+  const option = document.createElement('option');
+  option.value = recipeId;
+  option.textContent = recipes[recipeId].title;
+  recipeSelect.appendChild(option);
+}
+
+recipeSelect.addEventListener('change', () => {
+  const selectedRecipeId = recipeSelect.value;
+  if (selectedRecipeId) {
+    const selectedRecipe = recipes[selectedRecipeId];
+    recipeTitle.textContent = selectedRecipe.title;
+    funFact.textContent = selectedRecipe.funFact;
+
+    ingredientsList.innerHTML = ''; // Clear previous ingredients
+    selectedRecipe.ingredients.forEach(ingredient => {
+      const li = document.createElement('li');
+      li.textContent = ingredient;
+      ingredientsList.appendChild(li);
+    });
+
+    instructionsList.innerHTML = ''; // Clear previous instructions
+    selectedRecipe.instructions.forEach(instruction => {
+      const li = document.createElement('li');
+      li.textContent = instruction;
+      instructionsList.appendChild(li);
+    });
+
+
+    recipeContainer.style.display = 'block';
+  } else {
+    recipeContainer.style.display = 'none';
+  }
+});
+
+
+</script>
+
+</body>
+</html>
